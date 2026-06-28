@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>TechBalita Mobile</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f0f0f;
+      --paper: #f7f5f0;
+      --accent: #d4460a;
+      --muted: #6b6b6b;
+      --border: #e0dcd4;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── TOP AD BAR (fixed sa taas) ── */
+    .ad-top {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4px 0;
+      min-height: 60px;
+    }
+    .ad-label {
+      font-size: 0.55rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    /* ── BOTTOM AD BAR (fixed sa baba) ── */
+    .ad-bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 4px 0;
+      min-height: 60px;
+    }
+
+    /* ── MAIN CONTENT AREA ── */
+    .content {
+      padding-top: 70px;
+      padding-bottom: 70px;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--ink);
+      color: #fff;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .site-name span { color: var(--accent); }
+    .site-date {
+      font-size: 0.7rem;
+      color: #aaa;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #fff;
+      padding: 20px 16px;
+    }
+    .hero-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .hero-meta {
+      font-size: 0.72rem;
+      color: #999;
+    }
+
+    /* ── ARTICLE LIST ── */
+    .section-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      padding: 14px 16px 8px;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    .article-card {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .article-thumb {
+      width: 72px;
+      height: 56px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, #c9c4bb, #9a9189);
+      flex-shrink: 0;
+    }
+    .article-cat {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 3px;
+    }
+    .article-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .article-meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    /* ── TRENDING ── */
+    .trending-wrap {
+      padding: 14px 16px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .trending-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .trending-item {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .trending-item:last-child { border-bottom: none; }
+    .trend-num {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--border);
+      min-width: 22px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ★ TOP BANNER AD (Fixed) ★ -->
+  <div class="ad-top">
+    <span class="ad-label">Advertisement</span>
+    <script async="async" data-cfasync="false" src="https://pl30103898.effectivecpmnetwork.com/6f814d2dfe440f534593f0b2dd5623ce/invoke.js"></script>
+    <div id="container-6f814d2dfe440f534593f0b2dd5623ce"></div>
+  </div>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="content">
+
+    <div class="site-header">
+      <div class="site-name">Tech<span>Balita</span></div>
+      <div class="site-date">Hunyo 28, 2026</div>
+    </div>
+
+    <!-- Hero Article -->
+    <div class="hero">
+      <p class="hero-tag">Tampok</p>
+      <h1 class="hero-title">Ang Bagong AI ng Pilipinas: Paano Ito Magbabago ng Edukasyon</h1>
+      <p class="hero-meta">Ni Juan dela Cruz · 5 minuto basahin</p>
+    </div>
+
+    <p class="section-title">Pinakabago</p>
+
+    <div class="article-card">
+      <div class="article-thumb"></div>
+      <div>
+        <p class="article-cat">Gadgets</p>
+        <h2 class="article-title">Samsung Galaxy S26 Ultra: Unang Tingin sa Specs at Presyo sa PH</h2>
+        <p class="article-meta">Hunyo 27 · 3 min</p>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-thumb"></div>
+      <div>
+        <p class="article-cat">Gaming</p>
+        <h2 class="article-title">Top 5 Pinaka-Inaabangan na Laro ngayong 2026 para sa Filipino Gamers</h2>
+        <p class="article-meta">Hunyo 26 · 4 min</p>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-thumb"></div>
+      <div>
+        <p class="article-cat">AI</p>
+        <h2 class="article-title">ChatGPT vs Gemini vs Claude: Alin ang Pinakamainam para sa Trabaho?</h2>
+        <p class="article-meta">Hunyo 25 · 6 min</p>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-thumb"></div>
+      <div>
+        <p class="article-cat">Internet</p>
+        <h2 class="article-title">PLDT at Globe Naglunsad ng 10Gbps Fiber sa Mga Probinsya</h2>
+        <p class="article-meta">Hunyo 24 · 2 min</p>
+      </div>
+    </div>
+
+    <div class="article-card">
+      <div class="article-thumb"></div>
+      <div>
+        <p class="article-cat">Gadgets</p>
+        <h2 class="article-title">Pinakamababang Presyo ng Smartphone ngayong 2026: Top 10 Picks</h2>
+        <p class="article-meta">Hunyo 23 · 5 min</p>
+      </div>
+    </div>
+
+    <!-- Trending Section -->
+    <div class="trending-wrap">
+      <p class="trending-title">Trending Ngayon</p>
+      <div class="trending-item"><span class="trend-num">01</span><span>Paano mag-earn gamit ang AI tools</span></div>
+      <div class="trending-item"><span class="trend-num">02</span><span>Best broadband plan para sa WFH 2026</span></div>
+      <div class="trending-item"><span class="trend-num">03</span><span>Libre ba ang YouTube Premium sa GCash?</span></div>
+      <div class="trending-item"><span class="trend-num">04</span><span>Bagong update ng TikTok Shop PH</span></div>
+      <div class="trending-item"><span class="trend-num">05</span><span>iPhone 17 vs Galaxy S26 — Alin ang sulit?</span></div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- ★ BOTTOM BANNER AD (Fixed) ★ -->
+  <div class="ad-bottom">
+    <span class="ad-label">Advertisement</span>
+    <script async="async" data-cfasync="false" src="https://pl30103898.effectivecpmnetwork.com/6f814d2dfe440f534593f0b2dd5623ce/invoke.js"></script>
+    <div id="container-6f814d2dfe440f534593f0b2dd5623ce"></div>
+  </div>
+
+</body>
+  </html>
+  
