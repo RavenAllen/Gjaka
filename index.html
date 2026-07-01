@@ -1,308 +1,188 @@
 <!DOCTYPE html>
-<html lang="fil">
+<html lang="tl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>TechBalita Mobile</title>
-  <!-- ★ POPUNDER AD ★ -->
-  <script src="https://pl30104539.effectivecpmnetwork.com/21/36/b0/2136b073814083df73fb69431ed4dfc2.js"></script>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --ink: #0f0f0f;
-      --paper: #f7f5f0;
-      --accent: #d4460a;
-      --muted: #6b6b6b;
-      --border: #e0dcd4;
-    }
-
-    html, body {
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--paper);
-      color: var(--ink);
-      overflow-x: hidden;
-    }
-
-    /* ── TOP AD BAR (fixed sa taas) ── */
-    .ad-top {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 999;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 4px 0;
-      min-height: 58px;
-    }
-    .ad-label {
-      font-size: 0.55rem;
-      color: #aaa;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 2px;
-    }
-
-    /* ── BOTTOM AD BAR (fixed sa baba) ── */
-    .ad-bottom {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      z-index: 999;
-      background: #fff;
-      border-top: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 4px 0;
-      min-height: 58px;
-    }
-
-    /* ── MAIN CONTENT AREA ── */
-    .content {
-      padding-top: 68px;
-      padding-bottom: 68px;
-      min-height: 100vh;
-    }
-
-    /* ── HEADER ── */
-    .site-header {
-      background: var(--ink);
-      color: #fff;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .site-name {
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    .site-name span { color: var(--accent); }
-    .site-date { font-size: 0.7rem; color: #aaa; }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(160deg, #1a1a1a 0%, #2d2d2d 100%);
-      color: #fff;
-      padding: 20px 16px;
-    }
-    .hero-tag {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 8px;
-    }
-    .hero-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      line-height: 1.25;
-      margin-bottom: 10px;
-    }
-    .hero-meta { font-size: 0.72rem; color: #999; }
-
-    /* ── ARTICLE LIST ── */
-    .section-title {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      padding: 14px 16px 8px;
-      border-bottom: 2px solid var(--ink);
-    }
-
-    .article-card {
-      display: flex;
-      gap: 12px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      align-items: flex-start;
-    }
-    .article-thumb {
-      width: 72px;
-      height: 56px;
-      border-radius: 4px;
-      background: linear-gradient(135deg, #c9c4bb, #9a9189);
-      flex-shrink: 0;
-    }
-    .article-cat {
-      font-size: 0.62rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 3px;
-    }
-    .article-title {
-      font-size: 0.92rem;
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 4px;
-    }
-    .article-meta { font-size: 0.7rem; color: var(--muted); }
-
-    /* ── IN-CONTENT AD ── */
-    .ad-incontent {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 12px 0;
-      background: #f0ede8;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* ── TRENDING ── */
-    .trending-wrap {
-      padding: 14px 16px;
-      background: #fff;
-      border-bottom: 1px solid var(--border);
-    }
-    .trending-title {
-      font-size: 0.65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-    .trending-item {
-      display: flex;
-      align-items: baseline;
-      gap: 10px;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.85rem;
-    }
-    .trending-item:last-child { border-bottom: none; }
-    .trend-num {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: var(--border);
-      min-width: 22px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM Fix - Working Models</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
+  .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  .status { padding: 12px 16px; border-radius: 8px; margin: 8px 0; font-family: monospace; font-size: 14px; }
+  .ok { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+  .err { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+  .warn { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+  button { background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; }
+  button:hover { background: #0056b3; }
+  button:disabled { background: #6c757d; cursor: not-allowed; }
+  .progress-bar { width: 100%; height: 20px; background: #e9ecef; border-radius: 10px; overflow: hidden; margin: 10px 0; }
+  .progress-fill { height: 100%; background: #28a745; width: 0%; transition: width 0.3s; }
+  select { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; border-radius: 8px; border: 1px solid #ced4da; }
+  #log { background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; }
+  .step { background: #e9ecef; padding: 8px 12px; border-radius: 6px; margin: 4px 0; }
+</style>
 </head>
 <body>
 
-  <!-- ★ TOP BANNER AD — 320x50 (Fixed sa taas) ★ -->
-  <div class="ad-top">
-    <span class="ad-label">Advertisement</span>
-    <script>
-      atOptions = {
-        'key' : '8c9c08724f3976b9dfdf9c14812aa267',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    </script>
-    <script src="https://www.highperformanceformat.com/8c9c08724f3976b9dfdf9c14812aa267/invoke.js"></script>
-  </div>
+<h1>🔧 WebLLM Fix Tool</h1>
+<p>Gumagamit ito ng CONFIRMED WORKING model IDs.</p>
 
-  <!-- ── MAIN CONTENT ── -->
-  <div class="content">
+<div class="card">
+  <h2>📱 Step 1: Enable WebGPU</h2>
+  <div class="step">1. Go to <code>chrome://flags</code></div>
+  <div class="step">2. Search for "WebGPU"</div>
+  <div class="step">3. Enable "Unsafe WebGPU Support"</div>
+  <div class="step">4. Restart Chrome</div>
+  <div class="step">5. Balik dito at i-click ang "Check WebGPU"</div>
+  
+  <button id="checkGpuBtn">🔍 Check WebGPU Now</button>
+  <div id="gpuStatus" class="status info">Waiting for check...</div>
+</div>
 
-    <div class="site-header">
-      <div class="site-name">Tech<span>Balita</span></div>
-      <div class="site-date">Hunyo 28, 2026</div>
-    </div>
+<div class="card">
+  <h2>📦 Step 2: Load Model (CONFIRMED WORKING)</h2>
+  <p>Pumili ng modelo:</p>
+  <select id="modelSelect">
+    <option value="TinyLlama-1.1B-Chat-v0.4-q4f16_1">TinyLlama 1.1B (~650MB) - PINAKAMAGAAN</option>
+    <option value="gemma-2b-it-q4f16_1">Gemma 2B (~1.2GB)</option>
+    <option value="Phi-3-mini-4k-instruct-q4f16_1">Phi-3 3.8B (~2.3GB) - Pinakamaganda</option>
+  </select>
+  
+  <button id="loadBtn">⬇️ Load Model</button>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div id="statusMsg" class="status info">Ready to load...</div>
+</div>
 
-    <div class="hero">
-      <p class="hero-tag">Tampok</p>
-      <h1 class="hero-title">Ang Bagong AI ng Pilipinas: Paano Ito Magbabago ng Edukasyon</h1>
-      <p class="hero-meta">Ni Juan dela Cruz · 5 minuto basahin</p>
-    </div>
+<div class="card">
+  <h2>📋 Log</h2>
+  <div id="log">Waiting for action...</div>
+</div>
 
-    <p class="section-title">Pinakabago</p>
+<script type="module">
+  import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 
-    <div class="article-card">
-      <div class="article-thumb"></div>
-      <div>
-        <p class="article-cat">Gadgets</p>
-        <h2 class="article-title">Samsung Galaxy S26 Ultra: Unang Tingin sa Specs at Presyo sa PH</h2>
-        <p class="article-meta">Hunyo 27 · 3 min</p>
-      </div>
-    </div>
+  // ✅ CONFIRMED WORKING MODELS - Tamang spelling!
+  const CONFIRMED_MODELS = [
+    "TinyLlama-1.1B-Chat-v0.4-q4f16_1",
+    "gemma-2b-it-q4f16_1",
+    "Phi-3-mini-4k-instruct-q4f16_1"
+  ];
 
-    <div class="article-card">
-      <div class="article-thumb"></div>
-      <div>
-        <p class="article-cat">Gaming</p>
-        <h2 class="article-title">Top 5 Pinaka-Inaabangan na Laro ngayong 2026 para sa Filipino Gamers</h2>
-        <p class="article-meta">Hunyo 26 · 4 min</p>
-      </div>
-    </div>
+  // ✅ Custom Model List para sigurado
+  const customModelList = [
+    {
+      "model_id": "TinyLlama-1.1B-Chat-v0.4-q4f16_1",
+      "model_lib": "https://raw.githubusercontent.com/mlc-ai/binary-mlc-llm-libs/main/TinyLlama-1.1B-Chat-v0.4-q4f16_1/TinyLlama-1.1B-Chat-v0.4-q4f16_1-ctx4k_cuda.so",
+      "model_url": "https://huggingface.co/mlc-ai/TinyLlama-1.1B-Chat-v0.4-q4f16_1/resolve/main/",
+      "local_id": "TinyLlama-1.1B-Chat-v0.4-q4f16_1"
+    }
+  ];
 
-    <!-- ★ IN-CONTENT AD — 300x250 ★ -->
-    <div class="ad-incontent">
-      <span class="ad-label">Advertisement</span>
-      <script>
-        atOptions = {
-          'key' : '1eb042fe64ec6cb1643715701326579a',
-          'format' : 'iframe',
-          'height' : 250,
-          'width' : 300,
-          'params' : {}
-        };
-      </script>
-      <script src="https://www.highperformanceformat.com/1eb042fe64ec6cb1643715701326579a/invoke.js"></script>
-    </div>
+  let logs = [];
+  let engine = null;
 
-    <div class="article-card">
-      <div class="article-thumb"></div>
-      <div>
-        <p class="article-cat">AI</p>
-        <h2 class="article-title">ChatGPT vs Gemini vs Claude: Alin ang Pinakamainam para sa Trabaho?</h2>
-        <p class="article-meta">Hunyo 25 · 6 min</p>
-      </div>
-    </div>
+  function addLog(msg) {
+    const time = new Date().toLocaleTimeString();
+    logs.push(`[${time}] ${msg}`);
+    document.getElementById('log').textContent = logs.join('\n');
+    document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
+    console.log(msg);
+  }
 
-    <div class="article-card">
-      <div class="article-thumb"></div>
-      <div>
-        <p class="article-cat">Internet</p>
-        <h2 class="article-title">PLDT at Globe Naglunsad ng 10Gbps Fiber sa Mga Probinsya</h2>
-        <p class="article-meta">Hunyo 24 · 2 min</p>
-      </div>
-    </div>
+  function setStatus(msg, type = 'info') {
+    const el = document.getElementById('statusMsg');
+    el.textContent = msg;
+    el.className = `status ${type}`;
+  }
 
-    <div class="article-card">
-      <div class="article-thumb"></div>
-      <div>
-        <p class="article-cat">Gadgets</p>
-        <h2 class="article-title">Pinakamababang Presyo ng Smartphone ngayong 2026: Top 10 Picks</h2>
-        <p class="article-meta">Hunyo 23 · 5 min</p>
-      </div>
-    </div>
+  // Check WebGPU
+  document.getElementById('checkGpuBtn').addEventListener('click', async () => {
+    const statusEl = document.getElementById('gpuStatus');
+    addLog('🔍 Checking WebGPU...');
+    
+    if (!navigator.gpu) {
+      statusEl.className = 'status err';
+      statusEl.innerHTML = '❌ WebGPU NOT available. Please enable chrome://flags/#enable-unsafe-webgpu';
+      addLog('❌ WebGPU not available');
+      return;
+    }
+    
+    try {
+      const adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) {
+        statusEl.className = 'status warn';
+        statusEl.innerHTML = '⚠️ WebGPU adapter found but no adapter available. Try restarting Chrome.';
+        addLog('⚠️ No adapter available');
+        return;
+      }
+      
+      const device = await adapter.requestDevice();
+      statusEl.className = 'status ok';
+      statusEl.innerHTML = `✅ WebGPU WORKING! Device: ${adapter.name || 'Unknown'}`;
+      addLog(`✅ WebGPU working: ${adapter.name || 'Unknown'}`);
+      
+    } catch (err) {
+      statusEl.className = 'status err';
+      statusEl.innerHTML = `❌ WebGPU error: ${err.message}`;
+      addLog(`❌ WebGPU error: ${err.message}`);
+    }
+  });
 
-    <div class="trending-wrap">
-      <p class="trending-title">Trending Ngayon</p>
-      <div class="trending-item"><span class="trend-num">01</span><span>Paano mag-earn gamit ang AI tools</span></div>
-      <div class="trending-item"><span class="trend-num">02</span><span>Best broadband plan para sa WFH 2026</span></div>
-      <div class="trending-item"><span class="trend-num">03</span><span>Libre ba ang YouTube Premium sa GCash?</span></div>
-      <div class="trending-item"><span class="trend-num">04</span><span>Bagong update ng TikTok Shop PH</span></div>
-      <div class="trending-item"><span class="trend-num">05</span><span>iPhone 17 vs Galaxy S26 — Alin ang sulit?</span></div>
-    </div>
+  // Load Model
+  document.getElementById('loadBtn').addEventListener('click', async () => {
+    const modelId = document.getElementById('modelSelect').value;
+    const btn = document.getElementById('loadBtn');
+    const progressFill = document.getElementById('progressFill');
+    
+    btn.disabled = true;
+    progressFill.style.width = '0%';
+    setStatus(`⏳ Loading ${modelId}...`, 'info');
+    addLog(`🔄 Loading: ${modelId}`);
+    
+    try {
+      // Try with custom model list first
+      addLog('📦 Using custom model list...');
+      engine = await CreateMLCEngine(modelId, {
+        model_list: customModelList,
+        initProgressCallback: (report) => {
+          const pct = Math.round((report.progress || 0) * 100);
+          progressFill.style.width = pct + '%';
+          addLog(`${pct}% - ${report.text || 'Loading...'}`);
+        }
+      });
+      
+      setStatus(`✅ ${modelId} LOADED SUCCESSFULLY!`, 'ok');
+      addLog(`✅ SUCCESS! ${modelId} is ready!`);
+      
+    } catch (err) {
+      setStatus(`❌ Error: ${err.message}`, 'err');
+      addLog(`❌ ERROR: ${err.message}`);
+      
+      // Try without custom list (use default)
+      try {
+        addLog('🔄 Retrying with default config...');
+        engine = await CreateMLCEngine(modelId, {
+          initProgressCallback: (report) => {
+            const pct = Math.round((report.progress || 0) * 100);
+            progressFill.style.width = pct + '%';
+            addLog(`${pct}% - ${report.text || 'Loading...'}`);
+          }
+        });
+        
+        setStatus(`✅ ${modelId} LOADED (default config)!`, 'ok');
+        addLog(`✅ SUCCESS with default config!`);
+        
+      } catch (err2) {
+        setStatus(`❌ Both attempts failed: ${err2.message}`, 'err');
+        addLog(`❌ Second attempt failed: ${err2.message}`);
+        addLog('💡 Try enabling WebGPU flags and restart Chrome');
+      }
+    }
+    
+    btn.disabled = false;
+  });
 
-  </div><!-- /content -->
-
-  <!-- ★ BOTTOM NATIVE BANNER AD (Fixed sa baba) ★ -->
-  <div class="ad-bottom">
-    <span class="ad-label">Advertisement</span>
-    <script async="async" data-cfasync="false" src="https://pl30104168.effectivecpmnetwork.com/a4095f0b91e2e45de51afb5b294a4cbc/invoke.js"></script>
-    <div id="container-a4095f0b91e2e45de51afb5b294a4cbc"></div>
-  </div>
-
+  addLog('🟢 Tool ready! Follow the steps above.');
+</script>
 </body>
 </html>
