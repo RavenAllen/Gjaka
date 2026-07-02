@@ -3,186 +3,429 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LLM Fix - Working Models</title>
+<title>Search Terminal — In-Browser Private LLM (CPU)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  body { font-family: 'Segoe UI', sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f5f5; }
-  .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-  .status { padding: 12px 16px; border-radius: 8px; margin: 8px 0; font-family: monospace; font-size: 14px; }
-  .ok { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-  .err { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-  .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
-  .warn { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-  button { background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; cursor: pointer; width: 100%; }
-  button:hover { background: #0056b3; }
-  button:disabled { background: #6c757d; cursor: not-allowed; }
-  .progress-bar { width: 100%; height: 20px; background: #e9ecef; border-radius: 10px; overflow: hidden; margin: 10px 0; }
-  .progress-fill { height: 100%; background: #28a745; width: 0%; transition: width 0.3s; }
-  select { width: 100%; padding: 10px; margin: 10px 0; font-size: 16px; border-radius: 8px; border: 1px solid #ced4da; }
-  #log { background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 12px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; }
-  .step { background: #e9ecef; padding: 8px 12px; border-radius: 6px; margin: 4px 0; }
+  :root{
+    --paper:#F2EFE6;
+    --card:#FBFAF6;
+    --ink:#1F2A44;
+    --blueprint:#3D6FB4;
+    --copper:#B5652E;
+    --muted:#6B7280;
+    --line:#D8D2C2;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.5;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:28px 28px;
+    background-position:-1px -1px;
+  }
+  a{color:var(--blueprint);}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px;}
+
+  header{padding:28px 0 24px;border-bottom:1px solid var(--ink);margin-bottom:32px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--copper);
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;}
+  .dot.on{background:#3E8E5A;box-shadow:0 0 0 3px rgba(62,142,90,0.15);animation:pulse 2.4s infinite;}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 3px rgba(62,142,90,0.15);}
+    50%{box-shadow:0 0 0 6px rgba(62,142,90,0.06);}
+  }
+  @media (prefers-reduced-motion: reduce){ .dot.on{animation:none;} }
+
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(28px,5vw,40px);
+    font-weight:700;
+    margin:10px 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .sub{color:var(--muted);font-size:15px;max-width:56ch;}
+
+  .panel{
+    background:var(--card);
+    border:1px solid var(--ink);
+    border-radius:var(--radius);
+    padding:20px;
+    margin-bottom:24px;
+  }
+  .panel h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    margin:0 0 14px;
+    color:var(--muted);
+  }
+  label{
+    display:block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:4px;
+  }
+  input[type="text"], input[type="url"]{
+    width:100%;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:14px;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    color:var(--ink);
+  }
+  input:focus{outline:2px solid var(--blueprint);outline-offset:1px;}
+  .field{margin-bottom:14px;}
+
+  button{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    font-weight:500;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    padding:11px 18px;
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  button:hover{background:var(--blueprint);}
+  button:focus-visible{outline:2px solid var(--copper);outline-offset:2px;}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+  button.ghost:hover{background:var(--ink);color:var(--paper);}
+  button:disabled{opacity:.5;cursor:default;}
+  .actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+
+  .status-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:10px;
+    min-height:16px;
+  }
+
+  .progress-track{
+    width:100%;height:8px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:99px;
+    overflow:hidden;
+    margin-top:12px;
+  }
+  .progress-fill{
+    height:100%;width:0%;
+    background:var(--blueprint);
+    transition:width .2s ease;
+  }
+
+  .log{margin-top:8px;}
+  .entry{position:relative;padding:16px 0 16px 24px;border-left:1px solid var(--line);}
+  .entry::before{content:"";position:absolute;left:-4.5px;top:20px;width:8px;height:8px;border-radius:50%;background:var(--blueprint);}
+  .entry:first-child{padding-top:0;}
+  .entry:first-child::before{top:4px;}
+  .entry-idx{font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--copper);letter-spacing:.05em;}
+  .entry-title{font-family:'Space Grotesk', sans-serif;font-weight:600;font-size:16px;margin:4px 0 4px;}
+  .entry-title a{color:var(--ink);text-decoration:none;}
+  .entry-title a:hover{color:var(--blueprint);text-decoration:underline;}
+  .entry-snippet{font-size:14px;color:#3a4358;}
+  .entry-url{font-family:'IBM Plex Mono', monospace;font-size:11px;color:var(--muted);margin-top:6px;word-break:break-all;}
+
+  .answer-box{
+    font-size:15px;
+    white-space:pre-wrap;
+    background:#fff;
+    border:1px solid var(--ink);
+    border-left:4px solid var(--copper);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    min-height:60px;
+  }
+
+  .thinking{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'IBM Plex Mono', monospace;font-size:12px;color:var(--blueprint);
+  }
+  .thinking .dot{background:var(--blueprint);animation:pulse 1s infinite;}
+
+  .note{
+    background:#fff7ee;
+    border:1px solid var(--copper);
+    border-radius:var(--radius);
+    padding:14px 16px;
+    font-size:13px;
+    color:#7a4520;
+    margin-bottom:16px;
+  }
+
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);}
+  footer code{font-family:'IBM Plex Mono', monospace;background:#fff;border:1px solid var(--line);padding:1px 5px;border-radius:2px;}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<h1>🔧 WebLLM Fix Tool</h1>
-<p>Gumagamit ito ng CONFIRMED WORKING model IDs.</p>
+  <header>
+    <div class="eyebrow"><span class="dot" id="statusDot"></span><span id="statusLabel">modelo hindi pa naka-load</span></div>
+    <h1>Search Terminal</h1>
+    <p class="sub">Tumatakbo ang TinyLlama 1.1B direkta sa loob ng browser mo gamit ang CPU (WASM) — walang server, walang Termux, at hindi umaasa sa GPU ng phone mo.</p>
+  </header>
 
-<div class="card">
-  <h2>📱 Step 1: Enable WebGPU</h2>
-  <div class="step">1. Go to <code>chrome://flags</code></div>
-  <div class="step">2. Search for "WebGPU"</div>
-  <div class="step">3. Enable "Unsafe WebGPU Support"</div>
-  <div class="step">4. Restart Chrome</div>
-  <div class="step">5. Balik dito at i-click ang "Check WebGPU"</div>
-  
-  <button id="checkGpuBtn">🔍 Check WebGPU Now</button>
-  <div id="gpuStatus" class="status info">Waiting for check...</div>
-</div>
+  <div class="note">
+    <strong>Tandaan:</strong> dahil CPU na lang ang ginagamit (hindi GPU), mas
+    mabagal ang pag-generate — normal na umabot ng ilang minuto ang isang
+    sagot sa mahihinang phone. Trade-off ito para gumana kahit saang device.
+  </div>
 
-<div class="card">
-  <h2>📦 Step 2: Load Model (CONFIRMED WORKING)</h2>
-  <p>Pumili ng modelo:</p>
-  <select id="modelSelect">
-    <option value="TinyLlama-1.1B-Chat-v0.4-q4f16_1">TinyLlama 1.1B (~650MB) - PINAKAMAGAAN</option>
-    <option value="gemma-2b-it-q4f16_1">Gemma 2B (~1.2GB)</option>
-    <option value="Phi-3-mini-4k-instruct-q4f16_1">Phi-3 3.8B (~2.3GB) - Pinakamaganda</option>
-  </select>
-  
-  <button id="loadBtn">⬇️ Load Model</button>
-  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-  <div id="statusMsg" class="status info">Ready to load...</div>
-</div>
+  <div class="panel">
+    <h2>01 — Modelo (TinyLlama 1.1B, ~1.1GB, CPU)</h2>
+    <p class="sub" style="margin:0 0 10px;">Isang beses lang ito magda-download — ma-ca-cache ito sa browser mo para sa susunod na pagbisita.</p>
+    <button id="loadModelBtn" type="button">I-download at i-load ang modelo</button>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="status-line" id="modelMsg"></div>
+  </div>
 
-<div class="card">
-  <h2>📋 Log</h2>
-  <div id="log">Waiting for action...</div>
+  <div class="panel">
+    <h2>02 — Web Search (Render)</h2>
+    <div class="field">
+      <label for="apiUrl">Render URL mo</label>
+      <input type="url" id="apiUrl" placeholder="https://your-app-name.onrender.com" autocomplete="off">
+    </div>
+    <button class="ghost" id="checkBtn" type="button">I-check ang search backend</button>
+    <div class="status-line" id="connMsg"></div>
+  </div>
+
+  <div class="panel">
+    <h2>03 — Tanong</h2>
+    <div class="field">
+      <label for="queryInput">Tanong o paksa</label>
+      <input type="text" id="queryInput" placeholder="hal. latest news philippines" autocomplete="off">
+    </div>
+    <button id="searchBtn" type="button">Maghanap at Sagutin ng LLM</button>
+    <div class="status-line" id="searchMsg"></div>
+  </div>
+
+  <div class="panel" id="answerPanel" style="display:none;">
+    <h2>Sagot ng LLM</h2>
+    <div class="answer-box" id="answerBox">—</div>
+  </div>
+
+  <div class="panel" id="resultsPanel" style="display:none;">
+    <h2>Mga pinagkunan (search results)</h2>
+    <div class="log" id="log"></div>
+  </div>
+
+  <footer>
+    Ang modelo (TinyLlama 1.1B) ay tumatakbo gamit ang <strong>WebAssembly (CPU)</strong>
+    via Transformers.js — walang ipinapadalang tanong o sagot papunta sa kahit
+    anong server. Ang tanging kumokontak sa labas ay ang search step (Render),
+    na naghahanap lang ng web results; ang pag-generate ng sagot ay nasa
+    device mo. Kung masyadong mabagal sa phone mo, pwede mong palitan ang
+    <code>MODEL_ID</code> sa loob ng file sa mas maliit na model (hal.
+    <code>onnx-community/Qwen2.5-0.5B-Instruct</code>).
+  </footer>
+
 </div>
 
 <script type="module">
-  import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+  import { pipeline, TextStreamer } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3/+esm";
 
-  // ✅ CONFIRMED WORKING MODELS - Tamang spelling!
-  const CONFIRMED_MODELS = [
-    "TinyLlama-1.1B-Chat-v0.4-q4f16_1",
-    "gemma-2b-it-q4f16_1",
-    "Phi-3-mini-4k-instruct-q4f16_1"
-  ];
+  const MODEL_ID = "Xenova/TinyLlama-1.1B-Chat-v1.0";
 
-  // ✅ Custom Model List para sigurado
-  const customModelList = [
-    {
-      "model_id": "TinyLlama-1.1B-Chat-v0.4-q4f16_1",
-      "model_lib": "https://raw.githubusercontent.com/mlc-ai/binary-mlc-llm-libs/main/TinyLlama-1.1B-Chat-v0.4-q4f16_1/TinyLlama-1.1B-Chat-v0.4-q4f16_1-ctx4k_cuda.so",
-      "model_url": "https://huggingface.co/mlc-ai/TinyLlama-1.1B-Chat-v0.4-q4f16_1/resolve/main/",
-      "local_id": "TinyLlama-1.1B-Chat-v0.4-q4f16_1"
-    }
-  ];
+  const statusDot = document.getElementById('statusDot');
+  const statusLabel = document.getElementById('statusLabel');
 
-  let logs = [];
-  let engine = null;
+  const loadModelBtn = document.getElementById('loadModelBtn');
+  const progressFill = document.getElementById('progressFill');
+  const modelMsg = document.getElementById('modelMsg');
 
-  function addLog(msg) {
-    const time = new Date().toLocaleTimeString();
-    logs.push(`[${time}] ${msg}`);
-    document.getElementById('log').textContent = logs.join('\n');
-    document.getElementById('log').scrollTop = document.getElementById('log').scrollHeight;
-    console.log(msg);
+  const apiUrlInput = document.getElementById('apiUrl');
+  const checkBtn = document.getElementById('checkBtn');
+  const connMsg = document.getElementById('connMsg');
+
+  const queryInput = document.getElementById('queryInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchMsg = document.getElementById('searchMsg');
+
+  const answerPanel = document.getElementById('answerPanel');
+  const answerBox = document.getElementById('answerBox');
+  const resultsPanel = document.getElementById('resultsPanel');
+  const log = document.getElementById('log');
+
+  let generator = null;
+  let modelReady = false;
+  const fileProgress = {};
+
+  function trimSlash(s){ return s.trim().replace(/\/+$/,''); }
+  function setStatus(ok, label){
+    statusDot.classList.toggle('on', ok);
+    statusLabel.textContent = label;
   }
 
-  function setStatus(msg, type = 'info') {
-    const el = document.getElementById('statusMsg');
-    el.textContent = msg;
-    el.className = `status ${type}`;
-  }
+  loadModelBtn.addEventListener('click', loadModel);
 
-  // Check WebGPU
-  document.getElementById('checkGpuBtn').addEventListener('click', async () => {
-    const statusEl = document.getElementById('gpuStatus');
-    addLog('🔍 Checking WebGPU...');
-    
-    if (!navigator.gpu) {
-      statusEl.className = 'status err';
-      statusEl.innerHTML = '❌ WebGPU NOT available. Please enable chrome://flags/#enable-unsafe-webgpu';
-      addLog('❌ WebGPU not available');
-      return;
-    }
-    
-    try {
-      const adapter = await navigator.gpu.requestAdapter();
-      if (!adapter) {
-        statusEl.className = 'status warn';
-        statusEl.innerHTML = '⚠️ WebGPU adapter found but no adapter available. Try restarting Chrome.';
-        addLog('⚠️ No adapter available');
-        return;
-      }
-      
-      const device = await adapter.requestDevice();
-      statusEl.className = 'status ok';
-      statusEl.innerHTML = `✅ WebGPU WORKING! Device: ${adapter.name || 'Unknown'}`;
-      addLog(`✅ WebGPU working: ${adapter.name || 'Unknown'}`);
-      
-    } catch (err) {
-      statusEl.className = 'status err';
-      statusEl.innerHTML = `❌ WebGPU error: ${err.message}`;
-      addLog(`❌ WebGPU error: ${err.message}`);
-    }
-  });
-
-  // Load Model
-  document.getElementById('loadBtn').addEventListener('click', async () => {
-    const modelId = document.getElementById('modelSelect').value;
-    const btn = document.getElementById('loadBtn');
-    const progressFill = document.getElementById('progressFill');
-    
-    btn.disabled = true;
-    progressFill.style.width = '0%';
-    setStatus(`⏳ Loading ${modelId}...`, 'info');
-    addLog(`🔄 Loading: ${modelId}`);
-    
-    try {
-      // Try with custom model list first
-      addLog('📦 Using custom model list...');
-      engine = await CreateMLCEngine(modelId, {
-        model_list: customModelList,
-        initProgressCallback: (report) => {
-          const pct = Math.round((report.progress || 0) * 100);
-          progressFill.style.width = pct + '%';
-          addLog(`${pct}% - ${report.text || 'Loading...'}`);
+  async function loadModel(){
+    loadModelBtn.disabled = true;
+    modelMsg.textContent = 'Sinisimulan ang pag-load...';
+    try{
+      generator = await pipeline('text-generation', MODEL_ID, {
+        progress_callback: (info) => {
+          if(info.status === 'progress' && info.file){
+            fileProgress[info.file] = info.progress || 0;
+            const vals = Object.values(fileProgress);
+            const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+            const pct = Math.min(100, Math.round(avg));
+            progressFill.style.width = pct + '%';
+            modelMsg.textContent = `Dina-download: ${info.file} (${pct}%)`;
+          }else if(info.status){
+            modelMsg.textContent = info.status + (info.file ? ' — ' + info.file : '');
+          }
         }
       });
-      
-      setStatus(`✅ ${modelId} LOADED SUCCESSFULLY!`, 'ok');
-      addLog(`✅ SUCCESS! ${modelId} is ready!`);
-      
-    } catch (err) {
-      setStatus(`❌ Error: ${err.message}`, 'err');
-      addLog(`❌ ERROR: ${err.message}`);
-      
-      // Try without custom list (use default)
-      try {
-        addLog('🔄 Retrying with default config...');
-        engine = await CreateMLCEngine(modelId, {
-          initProgressCallback: (report) => {
-            const pct = Math.round((report.progress || 0) * 100);
-            progressFill.style.width = pct + '%';
-            addLog(`${pct}% - ${report.text || 'Loading...'}`);
-          }
-        });
-        
-        setStatus(`✅ ${modelId} LOADED (default config)!`, 'ok');
-        addLog(`✅ SUCCESS with default config!`);
-        
-      } catch (err2) {
-        setStatus(`❌ Both attempts failed: ${err2.message}`, 'err');
-        addLog(`❌ Second attempt failed: ${err2.message}`);
-        addLog('💡 Try enabling WebGPU flags and restart Chrome');
-      }
+      modelReady = true;
+      progressFill.style.width = '100%';
+      modelMsg.textContent = 'Handa na ang modelo — naka-cache na rin sa browser mo.';
+      setStatus(true, 'modelo naka-load, handa na (CPU)');
+      loadModelBtn.textContent = 'Na-load na ✓';
+    }catch(err){
+      modelMsg.textContent = 'Hindi na-load ang modelo: ' + err.message;
+      loadModelBtn.disabled = false;
+      setStatus(false, 'nabigo ang pag-load');
     }
-    
-    btn.disabled = false;
+  }
+
+  checkBtn.addEventListener('click', async () => {
+    const url = trimSlash(apiUrlInput.value);
+    if(!url){ connMsg.textContent = 'Ilagay muna ang Render URL.'; return; }
+    connMsg.textContent = 'Kinukonekta...';
+    try{
+      const res = await fetch(url + '/');
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      connMsg.textContent = 'Konektado — ' + (data.message || 'ok');
+    }catch(err){
+      connMsg.textContent = 'Hindi ma-reach ang search backend (' + err.message + '). Baka natutulog pa ang free-tier Render.';
+    }
   });
 
-  addLog('🟢 Tool ready! Follow the steps above.');
+  searchBtn.addEventListener('click', runPipeline);
+  queryInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') runPipeline(); });
+
+  async function fetchSearchResults(apiBase, q){
+    const res = await fetch(apiBase + '/search?q=' + encodeURIComponent(q) + '&max_results=5');
+    if(!res.ok) throw new Error('search HTTP ' + res.status);
+    return res.json();
+  }
+
+  async function runPipeline(){
+    const searchBase = trimSlash(apiUrlInput.value);
+    const q = queryInput.value.trim();
+
+    if(!modelReady){ searchMsg.textContent = 'I-load muna ang modelo sa "01" bago magtanong.'; return; }
+    if(!searchBase){ searchMsg.textContent = 'Ilagay muna ang Render URL.'; return; }
+    if(!q){ searchMsg.textContent = 'Maglagay ng tanong o paksa.'; return; }
+
+    searchBtn.disabled = true;
+    resultsPanel.style.display = 'none';
+    answerPanel.style.display = 'block';
+    answerBox.innerHTML = '<span class="thinking"><span class="dot on"></span>Naghahanap sa web...</span>';
+
+    let data;
+    try{
+      data = await fetchSearchResults(searchBase, q);
+    }catch(err){
+      answerBox.textContent = 'Hindi nakuha ang search results: ' + err.message;
+      searchBtn.disabled = false;
+      return;
+    }
+
+    log.innerHTML = '';
+    (data.results || []).forEach((r, i) => {
+      const entry = document.createElement('div');
+      entry.className = 'entry';
+      entry.innerHTML =
+        '<div class="entry-idx">[' + String(i+1).padStart(2,'0') + ']</div>' +
+        '<div class="entry-title"><a href="' + (r.url || '#') + '" target="_blank" rel="noopener">' + (r.title || 'Walang pamagat') + '</a></div>' +
+        '<div class="entry-snippet">' + (r.snippet || '') + '</div>' +
+        '<div class="entry-url">' + (r.url || '') + '</div>';
+      log.appendChild(entry);
+    });
+    resultsPanel.style.display = (data.results || []).length ? 'block' : 'none';
+
+    if(!data.context_text){
+      answerBox.textContent = 'Walang nahanap na search results para sagutin.';
+      searchBtn.disabled = false;
+      return;
+    }
+
+    const prompt =
+      'Base sa mga sumusunod na search results, sagutin nang malinaw at maikli ang tanong: "' + q + '"\n\n' +
+      data.context_text +
+      '\n\nSagot (banggitin ang [numero] ng source kung applicable):';
+
+    let elapsed = 0;
+    answerBox.innerHTML = '<span class="thinking"><span class="dot on"></span>Nag-iisip ang local LLM (CPU)... (<span id="elapsed">0</span>s — pwedeng tumagal ng ilang minuto)</span>';
+    const timer = setInterval(() => {
+      elapsed++;
+      const el = document.getElementById('elapsed');
+      if(el) el.textContent = elapsed;
+    }, 1000);
+
+    try{
+      let full = '';
+      let started = false;
+      const streamer = new TextStreamer(generator.tokenizer, {
+        skip_prompt: true,
+        callback_function: (text) => {
+          if(!started){
+            clearInterval(timer);
+            started = true;
+          }
+          full += text;
+          answerBox.textContent = full;
+        }
+      });
+
+      const messages = [{ role: 'user', content: prompt }];
+      const output = await generator(messages, {
+        max_new_tokens: 256,
+        temperature: 0.6,
+        do_sample: true,
+        streamer
+      });
+
+      clearInterval(timer);
+      if(!full.trim()){
+        const generated = output?.[0]?.generated_text;
+        const last = Array.isArray(generated) ? generated.at(-1)?.content : generated;
+        full = last || '(walang laman ang sagot)';
+      }
+      answerBox.textContent = full.trim();
+      searchMsg.textContent = 'Tapos.';
+    }catch(err){
+      clearInterval(timer);
+      answerBox.textContent = 'May error habang nag-ge-generate: ' + err.message;
+    }finally{
+      searchBtn.disabled = false;
+    }
+  }
 </script>
 </body>
-</html>
+      </html>
+  
